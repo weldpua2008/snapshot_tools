@@ -28,7 +28,7 @@ class PyTest(TestCommand):
 
 setup(
     name='snapshot_tools',
-    version='0.1',
+    version='0.2',
     author='Valeriy Solovyov',
     author_email='weldpua2008@gmail.com',
     url='https://github.com/weldpua2008/snapshot_tools',
