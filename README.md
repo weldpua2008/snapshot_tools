@@ -4,8 +4,8 @@ snapshot_tool
 A pysphere script for basic snapshot management (create, delete, list, revert).
 
 ``` bash
-./snapshot_tool.py  -h
-usage: snapshot_tool.py [-h] -s SERVER -u USERNAME [-p PASSWORD] -m VMNAME
+./esxsnapshot.py  -h
+usage: esxsnapshot.py [-h] -s SERVER -u USERNAME [-p PASSWORD] -m VMNAME
                         [-v] [-d] [-l LOGFILE] [-V]
                         {revert,create,list,delete} ...
 
@@ -43,7 +43,7 @@ For instance, listing snapshots taken of a certain VM:
 
 ``` bash
 
-./snapshot_tool.py -s 198.100.234.200 -u vma -m dijkstra -d list
+./esxsnapshot.py -s 198.100.234.200 -u vma -m dijkstra -d list
 2014-02-25 12:47:33,937 DEBUG logger initialized
 2014-02-25 12:47:33,937 DEBUG No command line password received, requesting password from user
 Enter password for vCenter 198.100.234.200 for user vma:
@@ -64,8 +64,8 @@ Enter password for vCenter 198.100.234.200 for user vma:
 Creating a snapshot:
 
 ``` bash
-./snapshot_tool.py -s 198.100.234.200 -u vma -m dijkstra -d create -h
-usage: snapshot_tool.py create [-h] -sn SNAME -sd SDESC [-sr] -no NOTIF
+./esxsnapshot.py -s 198.100.234.200 -u vma -m dijkstra -d create -h
+usage: esxsnapshot.py create [-h] -sn SNAME -sd SDESC [-sr] -no NOTIF
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -77,7 +77,7 @@ optional arguments:
   -no NOTIF, --notification NOTIF
                         Send email notification to included email address(es).
                         
-./snapshot_tool.py -s 198.100.234.200 -u vma -m dijkstra create -sn Snap2014-02-08@3 -sd "Testing new features"
+./esxsnapshot.py -s 198.100.234.200 -u vma -m dijkstra create -sn Snap2014-02-08@3 -sd "Testing new features"
 2014-02-25 12:52:08,142 DEBUG logger initialized
 2014-02-25 12:52:08,142 DEBUG No command line password received, requesting password from user
 Enter password for vCenter 198.100.234.200 for user vma: 
