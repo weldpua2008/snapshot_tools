@@ -1,5 +1,4 @@
-.. image:: https://api.travis-ci.org/weldpua2008/snapshot_tools.svg?branch=master
-  :target: https://travis-ci.org/weldpua2008/snapshot_tools
+[![Build Status](https://travis-ci.org/weldpua2008/snapshot_tools.svg?branch=master)](https://travis-ci.org/weldpua2008/snapshot_tools)
 
 
 snapshot_tool
