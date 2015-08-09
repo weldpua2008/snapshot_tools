@@ -8,12 +8,13 @@ import base64
 from pysphere import VIException
 import esxsnapshot.log
 import esxsnapshot.logs.send
-import esxsnapshot.pysphere.connect
-import esxsnapshot.pysphere.list
-import esxsnapshot.pysphere.find
-import esxsnapshot.pysphere.create
-import esxsnapshot.pysphere.delete
-import esxsnapshot.pysphere.revert
+import esxsnapshot
+import esxsnapshot.pyspheremodule.connect
+import esxsnapshot.pyspheremodule.list
+import esxsnapshot.pyspheremodule.find
+import esxsnapshot.pyspheremodule.create
+import esxsnapshot.pyspheremodule.delete
+import esxsnapshot.pyspheremodule.revert
 
 
 def get_args(): # pragma: no cover
@@ -273,7 +274,7 @@ def run(): # pragma: no cover
 
     # Connecting to server
     logger.info('Connecting to server %s with username %s' % (server, username))
-    con = esxsnapshot.pysphere.connect.to_esx(
+    con = esxsnapshot.pyspheremodule.connect.to_esx(
         server=server,
         username=username,
         password=password)
@@ -281,7 +282,7 @@ def run(): # pragma: no cover
 
     try:
             # Getting VM object
-        vm = esxsnapshot.pysphere.find.vm_by_name(vmname, con)
+        vm = esxsnapshot.pyspheremodule.find.vm_by_name(vmname, con)
 
         if vm:
             logger.info(
@@ -298,7 +299,7 @@ def run(): # pragma: no cover
         if hasattr(args, 'lall'):
             logger.debug('Listing all snapshots as requested by user.')
             list = args.lall
-            i = esxsnapshot.pysphere.list.snapshot(vm)
+            i = esxsnapshot.pyspheremodule.list.snapshot(vm)
             # Notification
             if hasattr(args, 'notif'):
                 logger.debug(
@@ -339,7 +340,7 @@ def run(): # pragma: no cover
             snapname = args.sname
             snapdesc = args.sdesc
             snaprun = args.ssync
-            i = esxsnapshot.pysphere.create.snapshot(vm, snapname, snapdesc, snaprun)
+            i = esxsnapshot.pyspheremodule.create.snapshot(vm, snapname, snapdesc, snaprun)
 
             # Notification
             if hasattr(args, 'notif'):
@@ -382,7 +383,7 @@ def run(): # pragma: no cover
             snapnamed = args.snamed
             snaprun = args.ssync
             children = args.children
-            i = esxsnapshot.pysphere.delete.snapshot(vm, snapnamed, snaprun, children)
+            i = esxsnapshot.pyspheremodule.delete.snapshot(vm, snapnamed, snaprun, children)
 
             # Notification
             if hasattr(args, 'notif'):
@@ -424,7 +425,7 @@ def run(): # pragma: no cover
             logger.debug('Reverting snapshot as requested by user.')
             snapnamer = args.snamer
             snaprun = args.ssync
-            i = esxsnapshot.pysphere.revert.snapshot(vm, snapnamer, snaprun)
+            i = esxsnapshot.pyspheremodule.revert.snapshot(vm, snapnamer, snaprun)
             # Notification
             if hasattr(args, 'notif'):
                 logger.debug(
