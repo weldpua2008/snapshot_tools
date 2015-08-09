@@ -2,7 +2,13 @@
 
 
 snapshot_tool
+=======
+
+
+Install
 ====================
+pip install git+git://github.com/weldpua2008/snapshot_tools --upgrade
+
 
 A pysphere script for basic snapshot management (create, delete, list, revert).
 

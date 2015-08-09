@@ -1,4 +1,4 @@
-import lib.log
+import esxsnapshot.log
 from datetime import datetime
 from pysphere import VIException
 
@@ -16,12 +16,12 @@ def snapshot(vm):
         snapshot_fl = []
         snapshot_list = vm.get_snapshots()
         snapshot_list_len = len(snapshot_list)
-        lib.log.debug(
+        esxsnapshot.log.debug(
             " Found %d snapshot(s). Will take a few secs to list." %
             snapshot_list_len)
         snaptext = ''
         if len(snapshot_list) > 0:
-            lib.log.info('%d snapshot(s) found.' % snapshot_list_len)
+            esxsnapshot.log.info('%d snapshot(s) found.' % snapshot_list_len)
             for snapshot in snapshot_list:
                 snapshot_name = snapshot.get_name()
                 snapshot_descr = snapshot.get_description()
@@ -32,14 +32,14 @@ def snapshot(vm):
                 #snaptext = 'Id: %s; Name: %s; Description: %s; Created: %s; State: %s; Path: %s \n' % (snapshot_id, snapshot_name, snapshot.get_description(), parseSNDate(snapshot.get_create_time()), snapshot.get_state(), snapshot.get_path())
 
                 snaptext = 'Name: %s; Description: %s; Created: %s; State: %s; Path: %s \n' % (snapshot_name, snapshot_descr, snapshot_create_time, snapshot_state, snapshot_path)
-                lib.log.warn(snaptext)
+                esxsnapshot.log.warn(snaptext)
                 snapshot_fl.append(snaptext)
             return snapshot_fl
         else:
-            lib.log.warning('No snapshots found related to this VM')
+            esxsnapshot.log.warning('No snapshots found related to this VM')
             return 1
     except VIException as inst:
-        lib.log.error(inst)
-        lib.log.error('An unexpected error was encountered.')
+        esxsnapshot.log.error(inst)
+        esxsnapshot.log.error('An unexpected error was encountered.')
         return 0
 

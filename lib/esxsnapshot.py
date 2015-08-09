@@ -6,14 +6,14 @@ import getpass
 import argparse
 import base64
 from pysphere import VIException
-import lib.log
-import lib.logs.send
-import lib.pysphere.connect
-import lib.pysphere.list
-import lib.pysphere.find
-import lib.pysphere.create
-import lib.pysphere.delete
-import lib.pysphere.revert
+import esxsnapshot.log
+import esxsnapshot.logs.send
+import esxsnapshot.pysphere.connect
+import esxsnapshot.pysphere.list
+import esxsnapshot.pysphere.find
+import esxsnapshot.pysphere.create
+import esxsnapshot.pysphere.delete
+import esxsnapshot.pysphere.revert
 
 
 def get_args(): # pragma: no cover
@@ -273,7 +273,7 @@ def run(): # pragma: no cover
 
     # Connecting to server
     logger.info('Connecting to server %s with username %s' % (server, username))
-    con = lib.pysphere.connect.to_esx(
+    con = esxsnapshot.pysphere.connect.to_esx(
         server=server,
         username=username,
         password=password)
@@ -281,7 +281,7 @@ def run(): # pragma: no cover
 
     try:
             # Getting VM object
-        vm = lib.pysphere.find.vm_by_name(vmname, con)
+        vm = esxsnapshot.pysphere.find.vm_by_name(vmname, con)
 
         if vm:
             logger.info(
@@ -298,7 +298,7 @@ def run(): # pragma: no cover
         if hasattr(args, 'lall'):
             logger.debug('Listing all snapshots as requested by user.')
             list = args.lall
-            i = lib.pysphere.list.snapshot(vm)
+            i = esxsnapshot.pysphere.list.snapshot(vm)
             # Notification
             if hasattr(args, 'notif'):
                 logger.debug(
@@ -307,7 +307,7 @@ def run(): # pragma: no cover
                 if i == 0:
                     message = '[%s] Snapshot(s) [%s] was [%s]' % (
                         action[3], vm.properties.name, status[0])
-                    lib.logs.send.send_notification(
+                    esxsnapshot.logs.send.send_notification(
                         from_snap,
                         args.notif,
                         action[3],
@@ -316,7 +316,7 @@ def run(): # pragma: no cover
                 elif i == 1:
                     message = '[%s] Snapshot(s) [%s] was [%s]' % (
                         action[3], vm.properties.name, status[1])
-                    lib.logs.send.send_notification(
+                    esxsnapshot.logs.send.send_notification(
                         from_snap,
                         args.notif,
                         action[3],
@@ -326,7 +326,7 @@ def run(): # pragma: no cover
                     message = ""
                     for s in i:
                         message += s + '\n'
-                    lib.logs.send.send_notification(
+                    esxsnapshot.logs.send.send_notification(
                         from_snap,
                         args.notif,
                         action[3],
@@ -339,7 +339,7 @@ def run(): # pragma: no cover
             snapname = args.sname
             snapdesc = args.sdesc
             snaprun = args.ssync
-            i = lib.pysphere.create.snapshot(vm, snapname, snapdesc, snaprun)
+            i = esxsnapshot.pysphere.create.snapshot(vm, snapname, snapdesc, snaprun)
 
             # Notification
             if hasattr(args, 'notif'):
@@ -349,7 +349,7 @@ def run(): # pragma: no cover
                 if i == 0:
                     message = '[%s] Snapshot [Name: %s; Desc: %s] was [%s]' % (
                         action[1], snapname, snapdesc, status[0])
-                    lib.logs.send.send_notification(
+                    esxsnapshot.logs.send.send_notification(
                         from_snap,
                         args.notif,
                         action[1],
@@ -359,7 +359,7 @@ def run(): # pragma: no cover
                 elif i == 1:
                     message = '[%s] Snapshot [Name: %s; Desc: %s] was [%s]' % (
                         action[1], snapname, snapdesc, status[1])
-                    lib.logs.send.send_notification(
+                    esxsnapshot.logs.send.send_notification(
                         from_snap,
                         args.notif,
                         action[1],
@@ -369,7 +369,7 @@ def run(): # pragma: no cover
                 elif i == 2:
                     message = '[%s] Snapshot [Name: %s; Desc: %s] was [%s]' % (
                         action[1], snapname, snapdesc, status[2])
-                    lib.logs.send.send_notification(
+                    esxsnapshot.logs.send.send_notification(
                         from_snap,
                         args.notif,
                         action[1],
@@ -382,7 +382,7 @@ def run(): # pragma: no cover
             snapnamed = args.snamed
             snaprun = args.ssync
             children = args.children
-            i = lib.pysphere.delete.snapshot(vm, snapnamed, snaprun, children)
+            i = esxsnapshot.pysphere.delete.snapshot(vm, snapnamed, snaprun, children)
 
             # Notification
             if hasattr(args, 'notif'):
@@ -392,7 +392,7 @@ def run(): # pragma: no cover
                 if i == 0:
                     message = '[%s] Snapshot [Name: %s; Children: %s] was [%s]' % (
                         action[2], snapnamed, children, status[0])
-                    lib.logs.send.send_notification(
+                    esxsnapshot.logs.send.send_notification(
                         from_snap,
                         args.notif,
                         action[2],
@@ -402,7 +402,7 @@ def run(): # pragma: no cover
                 elif i == 1:
                     message = '[%s] Snapshot [Name: %s; Children: %s] was [%s]' % (
                         action[2], snapnamed, children, status[1])
-                    lib.logs.send.send_notification(
+                    esxsnapshot.logs.send.send_notification(
                         from_snap,
                         args.notif,
                         action[2],
@@ -412,7 +412,7 @@ def run(): # pragma: no cover
                 elif i == 2:
                     message = '[%s] Snapshot [Name: %s; Children: %s] was [%s]' % (
                         action[2], snapnamed, children, status[2])
-                    lib.logs.send.send_notification(
+                    esxsnapshot.logs.send.send_notification(
                         from_snap,
                         args.notif,
                         action[2],
@@ -424,7 +424,7 @@ def run(): # pragma: no cover
             logger.debug('Reverting snapshot as requested by user.')
             snapnamer = args.snamer
             snaprun = args.ssync
-            i = lib.pysphere.revert.snapshot(vm, snapnamer, snaprun)
+            i = esxsnapshot.pysphere.revert.snapshot(vm, snapnamer, snaprun)
             # Notification
             if hasattr(args, 'notif'):
                 logger.debug(
@@ -433,7 +433,7 @@ def run(): # pragma: no cover
                 if i == 0:
                     message = '[%s] Snapshot [Name: %s] was [%s]' % (
                         action[4], snapnamer, status[0])
-                    lib.logs.send.send_notification(
+                    esxsnapshot.logs.send.send_notification(
                         from_snap,
                         args.notif,
                         action[4],
@@ -443,7 +443,7 @@ def run(): # pragma: no cover
                 elif i == 1:
                     message = '[%s] Snapshot [Name: %s] was [%s]' % (
                         action[4], snapnamer, status[1])
-                    lib.logs.send.send_notification(
+                    esxsnapshot.logs.send.send_notification(
                         from_snap,
                         args.notif,
                         action[4],
@@ -453,7 +453,7 @@ def run(): # pragma: no cover
                 elif i == 2:
                     message = '[%s] Snapshot [Name: %s] was [%s]' % (
                         action[4], snapnamer, status[2])
-                    lib.logs.send.send_notification(
+                    esxsnapshot.logs.send.send_notification(
                         from_snap,
                         args.notif,
                         action[4],
