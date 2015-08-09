@@ -1,0 +1,26 @@
+import lib.log
+from pysphere import VIException
+
+
+__author__ = 'weldpua2008@gmail.com'
+
+
+def snapshot(vm, snapname, snaprun, children):
+    try:
+        lib.log.info(
+            'Deleting snapshot of %s with the following attributes: Name: %s. Delete options: Run Sync: %s; Children: %s' %
+            (vm.properties.name, snapname, snaprun, children))
+        vm.delete_named_snapshot(
+            snapname,
+            remove_children=children,
+            sync_run=snaprun)
+        if snaprun:
+            lib.log.info("Snapshot successfully deleted")
+            return 1
+        else:
+            lib.log.warning(
+                "Task running asynchronously. This might take a few minutes.")
+            return 2
+    except VIException as inst:
+        lib.log.error(inst)
+        return 0
