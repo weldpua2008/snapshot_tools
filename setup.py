@@ -1,3 +1,9 @@
+#!/usr/bin/env python
+
+import sys
+import os
+sys.path.insert(0, os.path.abspath('lib'))
+
 from setuptools import setup, find_packages
 from setuptools.command.test import test as TestCommand
 import sys
@@ -33,7 +39,9 @@ setup(
     keywords='esxi vmware snapshot',
     # You can just specify the packages manually here if your project is
     # simple. Or you can use find_packages().
-    packages=find_packages(exclude=['contrib', 'docs', 'tests*']),
+    #packages=find_packages(exclude=['contrib', 'docs', 'tests*']),
+    package_dir={'': 'lib'},
+    packages=find_packages('lib'),
 
 
     install_requires=install_requires,
