@@ -39,9 +39,9 @@ setup(
     keywords='esxi vmware snapshot',
     # You can just specify the packages manually here if your project is
     # simple. Or you can use find_packages().
-    packages=find_packages(exclude=['contrib', 'docs', 'tests*']),
-    #package_dir={'': 'lib'},
-    #packages=find_packages('lib'),
+    #packages=find_packages(exclude=['contrib', 'docs', 'tests*']),
+    package_dir={'': 'lib'},
+    packages=find_packages('lib'),
 
 
     install_requires=install_requires,
@@ -65,7 +65,7 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'esxsnapshot=esxsnapshot:run',
+            'esxsnapshot=esxsnapshotbin:run',
         ],
     },
     zip_safe = False,
