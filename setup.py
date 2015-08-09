@@ -65,7 +65,7 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'esxsnapshot=esxsnapshotbin:run',
+            'esxsnapshot=esxsnapshot.esxsnapshotbin:run',
         ],
     },
     zip_safe = False,
