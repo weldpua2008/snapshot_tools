@@ -4,10 +4,10 @@ __author__ = 'weldpua2008@gmail.com'
 
 
 def vm_by_name(name, con):
-    """Find vm by uuid
-    :param uuid:
+    """Find vm by name. It's lazy method
+    :param name:
     :param con:
-    :return:
+    :return:vm
     """
 
     try:
@@ -34,7 +34,7 @@ def vm_by_uuid(uuid, con):
     """Find vm by uuid
     :param uuid:
     :param con:
-    :return:
+    :return:vm
     """
 
     try:
@@ -51,9 +51,9 @@ def vm_by_uuid(uuid, con):
 
 def vm_by_ip(ip, con):
     """Find vm by uuid
-    :param uuid:
+    :param ip:
     :param con:
-    :return:
+    :return:vm
     """
 
     try:
