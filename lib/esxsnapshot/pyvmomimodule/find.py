@@ -3,6 +3,33 @@ import sys
 __author__ = 'weldpua2008@gmail.com'
 
 
+def vm_by_name(name, con):
+    """Find vm by uuid
+    :param uuid:
+    :param con:
+    :return:
+    """
+
+    try:
+        content = con.RetrieveContent()
+        children = content.rootFolder.childEntity
+        for child in children:
+            if hasattr(child, 'vmFolder'):
+                datacenter = child
+            else:
+                # some other non-datacenter type object
+                continue
+            vm_folder = datacenter.vmFolder
+            vm_list = vm_folder.childEntity
+            for virtual_machine in vm_list:
+                if virtual_machine.summary.config.name == name:
+                    return virtual_machine
+    except Exception as error:
+        esxsnapshot.log.debug('Not found VM %s because %s ' % (name, error))
+        return None
+
+
+
 def vm_by_uuid(uuid, con):
     """Find vm by uuid
     :param uuid:
