@@ -1,3 +1,4 @@
+import esxsnapshot
 import esxsnapshot.log
 from pysphere import VIException
 
